@@ -1,6 +1,9 @@
+> [!IMPORTANT]
+> **Temporary mirror.** The original repository by [zoicware](https://github.com/zoicware/RemoveWindowsAI) is currently unavailable, so this fork is hosting the script in the meantime. The script is his work and I've only changed the download URLs to point at this fork.
+
 # Remove Windows Ai
 ## Why?
-The current 25H2 build of Windows 11 and future builds will include increasingly more AI features and components. This script aims to remove ALL of these features to improve user experience, privacy and security. 
+In Windows 11 22H2 Microsoft began adding AI features like Copilot and Recall. Since then, additional AI driven components have been added, many of which have never been publicly documented. This script aims to remove ALL of these features to improve user experience, privacy and security. 
 
 <img width="150" alt="AI-Explorer-icon" src="https://github.com/zoicware/RemoveWindowsAI/assets/118035521/33efb033-c935-416c-977d-777bb69a3737">
 
@@ -15,15 +18,16 @@ The current 25H2 build of Windows 11 and future builds will include increasingly
    - Disable Recall
    - Disable Input Insights and typing data harvesting 
    - Copilot in Edge
-   - Image Creator in Paint
+   - Disable AI Experiments Program in Paint
    - Remove AI Fabric Service
    - Disable AI Actions
-   - Disable AI in Paint
    - Disable Voice Access
    - Disable AI Voice Effects
    - Disable AI in Settings Search
    - Disable Gaming Copilot
    - Disable Copilot in All Office Apps
+   - Disable AI Features in Photos App
+   - Disable Click to Do in Snipping Tool
  - **Prevent Reinstall of AI Packages**
    - Installs custom Windows Update package to prevent reinstall of AI packages in the CBS (Component-Based Servicing) store 
  - **Disable Copilot policies** 
@@ -38,8 +42,14 @@ The current 25H2 build of Windows 11 and future builds will include increasingly
  - **Hide AI Components**
    - This will hide the settings page `AI Components` 
  - **Disable Rewrite AI Feature in Notepad**
- - **Remove Recall Tasks**
-   - Forcibly removes all instances of Recall's scheduled tasks
+ - **Remove Windows AI Tasks**
+   - Forcibly removes all instances of Windows AI scheduled tasks
+  - **Update Cleanup Check**
+     - Creates scheduled task to check if Windows has been updated and if it has, newly installed AI features will be removed
+  - **Disable Defender AI**
+     - Disables the Defender AI Platform host process and settings
+   - **Disable NPU Device**
+     - Disables the NPU (Neural Processing Unit) on relevant hardware. 
 
  - #### Install Classic Apps
    - These options will allow you to replace the modern AI infested apps with their classic version
@@ -47,10 +57,10 @@ The current 25H2 build of Windows 11 and future builds will include increasingly
  
 #### Manual AI Disabling
 - Unfortunately, not all features and settings can be disabled via a script. This guide will show additional AI features to disable.
-> **[Disable Other AI Features](https://github.com/zoicware/RemoveWindowsAI/blob/main/OtherAIFeatures.md)**
+> **[Disable Other AI Features](https://github.com/iFryno/RemoveWindowsAI/blob/main/OtherAIFeatures.md)**
   
 ### Read the Script Docs Here
-  > **[Documentation](https://github.com/zoicware/RemoveWindowsAI/blob/main/Documentation.md)**
+  > **[Documentation](https://github.com/iFryno/RemoveWindowsAI/blob/main/Documentation.md)**
 
   > [!WARNING]
   > Some third party anti-viruses will falsely detect the script as malicious, obviously this is a false positive and the anti-virus will need to be temporarily disabled or set the script as an exclusion.
@@ -71,21 +81,18 @@ The current 25H2 build of Windows 11 and future builds will include increasingly
 
  ### Launch with UI
  ```PowerShell
- & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/zoicware/RemoveWindowsAI/main/RemoveWindowsAi.ps1")))
+ & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/iFryno/RemoveWindowsAI/%23freezoic/RemoveWindowsAi.ps1")))
  ```
- ### Compact Command:
- ##### Link shortened using open source link shortener: https://kutt.it/
- ```PowerShell
- & ([scriptblock]::Create((irm 'https://kutt.it/RWAI')))
- ```
+
 
 
 
  <details>  
   <summary>Click to View UI</summary>
-  <img width="586" height="693" alt="Capture2" src="https://github.com/user-attachments/assets/fa105ba5-c1dc-447c-ae2e-7ee373291042" />
-  <img width="586" height="693" alt="Capture2" src="https://github.com/user-attachments/assets/8a446a23-7c47-468e-856b-1e783205c511" />
+  <img width="586" height="693" alt="Capture2" src="https://github.com/user-attachments/assets/a2a4f371-23fa-4549-9b4d-25e91a5aa71e" />
+  <img width="556" height="253" alt="Capture2" src="https://github.com/user-attachments/assets/8a446a23-7c47-468e-856b-1e783205c511" />
 </details>  
+
 
 &nbsp;
 
@@ -93,14 +100,19 @@ The current 25H2 build of Windows 11 and future builds will include increasingly
 
 **Run in Non-Interactive Mode with All Options**
  ```PowerShell
- & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/zoicware/RemoveWindowsAI/main/RemoveWindowsAi.ps1"))) -nonInteractive -AllOptions
+ & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/iFryno/RemoveWindowsAI/%23freezoic/RemoveWindowsAi.ps1"))) -nonInteractive -AllOptions
  ```
 
 --- 
 
 **Run with Specific Options Example**
  ```PowerShell
- & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/zoicware/RemoveWindowsAI/main/RemoveWindowsAi.ps1"))) -nonInteractive -Options DisableRegKeys,RemoveAppxPackages,DisableCopilotPolicies 
+ & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/iFryno/RemoveWindowsAI/%23freezoic/RemoveWindowsAi.ps1"))) -nonInteractive -Options DisableRegKeys,RemoveAppxPackages,DisableCopilotPolicies 
+ ```
+
+ **Run with Specific Options Excluded Example**
+ ```PowerShell
+ & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/iFryno/RemoveWindowsAI/%23freezoic/RemoveWindowsAi.ps1"))) -nonInteractive -ExcludeOptions -Options DisableRegKeys,RemoveAppxPackages,DisableCopilotPolicies 
  ```
 
 **All Possible Options:**
@@ -114,12 +126,15 @@ RemoveCBSPackages
 RemoveAIFiles               
 HideAIComponents            
 DisableRewrite      
-RemoveRecallTasks
+RemoveWindowsAITasks
+UpdateCleanupCheck
+DisableDefenderAI
+DisableNPUDevice
 ```
 
 **Run Install Classic Apps**
  ```PowerShell
- & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/zoicware/RemoveWindowsAI/main/RemoveWindowsAi.ps1"))) -nonInteractive -InstallClassicApps photoviewer,mspaint,snippingtool,notepad  
+ & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/iFryno/RemoveWindowsAI/%23freezoic/RemoveWindowsAi.ps1"))) -nonInteractive -InstallClassicApps photoviewer,mspaint,snippingtool,notepad  
  ```
 
 **All Possible Options:**
@@ -137,8 +152,9 @@ photoslegacy
 > [!NOTE]
 > Backup Mode needs to be enabled to be able to fully revert
 > 
+> **This creates a restore point for you**
  ```PowerShell
- & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/zoicware/RemoveWindowsAI/main/RemoveWindowsAi.ps1"))) -nonInteractive -backupMode -AllOptions
+ & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/iFryno/RemoveWindowsAI/%23freezoic/RemoveWindowsAi.ps1"))) -nonInteractive -backupMode -AllOptions
  ```
 
 ---
@@ -146,7 +162,7 @@ photoslegacy
 **Revert Changes**
 
  ```PowerShell
- & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/zoicware/RemoveWindowsAI/main/RemoveWindowsAi.ps1"))) -nonInteractive -revertMode -AllOptions
+ & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/iFryno/RemoveWindowsAI/%23freezoic/RemoveWindowsAi.ps1"))) -nonInteractive -revertMode -AllOptions
  ```
 
 ---
@@ -156,7 +172,7 @@ photoslegacy
 Given that Microsoft are continually updating and adding new AI features this script will attempt to stay updated for the newest stable build.
 
 You can view the newest updates to the script here:
-https://github.com/zoicware/RemoveWindowsAI/commits/main/
+https://github.com/iFryno/RemoveWindowsAI/commits/main/
 
  > [!NOTE]  
 > Any feature added to an Insider build will not be added to this script till it's added to the latest stable release
@@ -185,11 +201,17 @@ If you would like to support my work consider donating :)
 
 
 
+### Trophies
 
+<p align="left">
+ <a href="https://www.star-history.com/zoicware/removewindowsai">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=zoicware/RemoveWindowsAI&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=zoicware/RemoveWindowsAI&type=rank" /><img alt="Star History Rank" src="https://api.star-history.com/badge?repo=zoicware/RemoveWindowsAI&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=zoicware/RemoveWindowsAI&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=zoicware/RemoveWindowsAI&type=trending" /><img alt="GitHub Trending Repository of the Day" src="https://api.star-history.com/badge?repo=zoicware/RemoveWindowsAI&type=trending" /></picture>
+ </a>
+</p>
 
+<a href="https://trendshift.io/repositories/17852?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-17852" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/17852/yearly?language=PowerShell" alt="zoicware%2FRemoveWindowsAI | Trendshift" width="250" height="55"/></a>
 
-
-
+<img src="https://img.shields.io/badge/%23_11-Top%20100%20PowerShell%20Repos-gold?style=for-the-badge&logo=powershell&logoColor=white" alt="Top 100 PowerShell Repos - #11" />
 
 
 
